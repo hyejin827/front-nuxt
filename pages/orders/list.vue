@@ -78,7 +78,6 @@ export default {
     methods: {
         async getOrderList() {
             const orderList = await fetchOrders(this.orderSearch).then(res => res.data)
-            debugger
             console.log(orderList)
         }
     }
