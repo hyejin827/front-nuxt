@@ -34,6 +34,7 @@ export default {
   async asyncData() {
     const res = await fetchMembers()
     const memberList = res.data
+    debugger
     return { memberList }
   },
   data() {

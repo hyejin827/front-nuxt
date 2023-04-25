@@ -61,8 +61,8 @@ export default {
     data() {
         return {
             orderSearch: {
-                memberName: '',
-                orderStatus: ''
+                memberName: 'test',
+                orderStatus: 'ORDER'
             },
             orderList: []
         }
@@ -78,6 +78,8 @@ export default {
     methods: {
         async getOrderList() {
             const orderList = await fetchOrders(this.orderSearch).then(res => res.data)
+            debugger
+            this.orderList = orderList
             console.log(orderList)
         }
     }

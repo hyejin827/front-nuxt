@@ -45,8 +45,8 @@ function createOrder(data) {
   return order.post('/new', data)
 }
 
-function fetchOrders(data) {
-  return order.post('/list', data)
+function fetchOrders(params) {
+  return order.get('/list', { params })
 }
 
 export { fetchTest, fetchMembers, createMember, fetchItems, createItem, fetchItem, createOrder, fetchOrders }
