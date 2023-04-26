@@ -4,16 +4,12 @@
     <div>
         <div>
             <div class="form-group mb-2">
-                <input type="text" th:field="*{memberName}" class="form-control" placeholder="회원명"/>
+                <input v-model="orderSearch.memberName" type="text" class="form-control" placeholder="회원명"/>
             </div>
             <div class="form-group mx-sm-1 mb-2">
                 <select th:field="*{orderStatus}" class="form-control">
                     <option value="">주문상태</option>
-                    <option
-th:each="status : ${T(jpabook.jpashop.domain.OrderStatus).values()}"
-                            th:value="${status}"
-                            th:text="${status}">option
-                    </option>
+                    <option></option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary mb-2">검색</button>
@@ -33,18 +29,16 @@ th:each="status : ${T(jpabook.jpashop.domain.OrderStatus).values()}"
             </tr>
             </thead>
             <tbody>
-            <tr th:each="item : ${orders}">
-                <td th:text="${item.id}"></td>
-                <td th:text="${item.member.name}"></td>
-                <td th:text="${item.orderItems[0].item.name}"></td>
-                <td th:text="${item.orderItems[0].orderPrice}"></td>
-                <td th:text="${item.orderItems[0].count}"></td>
-                <td th:text="${item.status}"></td>
-                <td th:text="${item.orderDate}"></td>
+            <tr v-for="order in orderList" :key="order.id">
+                <td>{{ order.id }}</td>
+                <td>{{ order.memberName }}</td>
+                <td>{{ order.itemName }}</td>
+                <td>{{ order.price }}</td>
+                <td>{{ order.count }}</td>
+                <td>{{ order.orderStatus }}</td>
+                <td>{{ order.orderDate }}</td>
                 <td>
-                    <a
-th:if="${item.status.name() == 'ORDER'}" href="#" th:href="'javascript:cancel('+${item.id}+')'"
-                      class="btn btn-danger">CANCEL</a>
+                    <a class="btn btn-danger">CANCEL</a>
                 </td>
             </tr>
 
@@ -61,7 +55,7 @@ export default {
     data() {
         return {
             orderSearch: {
-                memberName: 'test',
+                memberName: '',
                 orderStatus: 'ORDER'
             },
             orderList: []
@@ -78,9 +72,7 @@ export default {
     methods: {
         async getOrderList() {
             const orderList = await fetchOrders(this.orderSearch).then(res => res.data)
-            debugger
             this.orderList = orderList
-            console.log(orderList)
         }
     }
 }
