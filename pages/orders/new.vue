@@ -31,7 +31,7 @@
 <script>
 import { createOrder, fetchItems, fetchMembers } from '~/api'
 export default {
-    async asyncData() {
+    async asyncData({isDev, route, store, env, params, query, req, res, redirect, error}) {
         const memberList = await fetchMembers().then(res => res.data).catch(error => {
             console.log('회원에러', error)
         })
@@ -42,8 +42,6 @@ export default {
     },
     data() {
         return {
-            memberList: [],
-            itemList: [],
             formData: {
                 memberId: '',
                 itemId: '',

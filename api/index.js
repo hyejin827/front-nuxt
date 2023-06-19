@@ -49,4 +49,8 @@ function fetchOrders(params) {
   return order.get('/list', { params })
 }
 
-export { fetchTest, fetchMembers, createMember, fetchItems, createItem, fetchItem, createOrder, fetchOrders }
+function cancelOrder(orderId) {
+  return order.post(`/cancel/${orderId}`)
+}
+
+export { fetchTest, fetchMembers, createMember, fetchItems, createItem, fetchItem, createOrder, fetchOrders, cancelOrder }

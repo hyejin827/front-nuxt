@@ -40,7 +40,6 @@ export default {
   methods: {
     async submitMember() {
       const res = await createMember(this.member)
-      console.log("회원등록 res ===> " + res.data)
       if (res.data === 'success') {
         this.$router.push('/members/list')
       }

@@ -31,17 +31,16 @@
 import { fetchMembers } from '~/api'
 
 export default {
-  async asyncData() {
+  async asyncData(aa) {
     const res = await fetchMembers()
     const memberList = res.data
-    debugger
     return { memberList }
   },
-  data() {
-    return {
-      memberList: []
-    }
-  },
+  created() {
+    console.log(`this===>${this}`)
+    console.log(this)
+
+  }
 }
 </script>
 

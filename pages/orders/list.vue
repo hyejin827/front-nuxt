@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <test></test>
     <div>주문 내역</div>
     <div>
         <div>
@@ -7,12 +8,13 @@
                 <input v-model="orderSearch.memberName" type="text" class="form-control" placeholder="회원명"/>
             </div>
             <div class="form-group mx-sm-1 mb-2">
-                <select th:field="*{orderStatus}" class="form-control">
+                <select v-model="orderSearch.orderStatus" class="form-control">
                     <option value="">주문상태</option>
-                    <option></option>
+                    <option value="ORDER">주문</option>
+                    <option value="CANCEL">취소</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary mb-2">검색</button>
+            <button type="submit" class="btn btn-primary mb-2" @click="$fetch">검색</button>
         </div>
 
         <table class="table table-striped">
@@ -37,8 +39,8 @@
                 <td>{{ order.count }}</td>
                 <td>{{ order.orderStatus }}</td>
                 <td>{{ order.orderDate }}</td>
-                <td>
-                    <a class="btn btn-danger">CANCEL</a>
+                <td v-if="order.orderStatus === 'ORDER'">
+                    <a class="btn btn-danger" @click="cancelOd(order.id)">CANCEL</a>
                 </td>
             </tr>
 
@@ -50,8 +52,10 @@
 </template>
 
 <script>
-import { fetchOrders } from '~/api'
+import test from './test.vue'
+import { cancelOrder, fetchOrders } from '~/api'
 export default {
+  components: { test },
     data() {
         return {
             orderSearch: {
@@ -66,15 +70,30 @@ export default {
     //     debugger
     //     return { orderList }
     // },
-    created() {
-        this.getOrderList()
+    async fetch() {
+        await fetchOrders(this.orderSearch).then(res => {
+            const orderList = res.data
+            this.orderList = orderList
+        })
     },
     methods: {
-        async getOrderList() {
-            const orderList = await fetchOrders(this.orderSearch).then(res => res.data)
-            this.orderList = orderList
+        // async getOrderList() {
+        //     await fetchOrders(this.orderSearch).then(res => {
+        //         const orderList = res.data
+        //         this.orderList = orderList
+        //     })
+        //     // const orderList = await fetchOrders(this.orderSearch).then(res => res.data)
+            
+        // },
+        async cancelOd(orderId) {
+            const res = await cancelOrder(orderId).then(res => res.data)
+            if(res === 'success') {
+                alert('취소완료우우우우')
+                this.$fetch()
+            }
         }
-    }
+    },
+    // fetchOnServer: false
 }
 </script>
 

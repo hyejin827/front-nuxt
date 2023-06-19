@@ -36,11 +36,6 @@ export default {
     const itemList = res.data
     return { itemList }
   },
-  data() {
-    return {
-      itemList: []      
-    }
-  },
   methods: {
     moveToEdit(id) {
         this.$router.push(`/items/${id}`)

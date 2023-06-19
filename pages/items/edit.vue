@@ -31,17 +31,11 @@
 
 <script>
 import { createItem, fetchItem } from '~/api'
-import { Book } from '~/model/model'
 export default {
     async asyncData({ params }) {
         const res = await fetchItem(params.id)
         const book = res.data
         return { book }
-    },
-    data() {
-        return {
-            book : new Book()
-        }
     },
     methods: {
         async editBook(){

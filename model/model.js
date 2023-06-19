@@ -34,7 +34,7 @@ export class Order {
 }
 
 export class Item {
-  constructor() {
+  constructor(id) {
     this.id = ''
     this.name = ''
     this.price = ''
@@ -42,11 +42,11 @@ export class Item {
   }
 }
 
-export class Book {
+export class Book extends Item {
   constructor() {
+    super()
     this.author = ''
     this.isbn = ''
-    this.item = new Item()
   }
 }
 
